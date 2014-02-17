@@ -1,0 +1,234 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.rpa.defra</groupId>
+    <artifactId>jms-solution</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>jms-web</artifactId>
+  <packaging>war</packaging>
+  <name>web module of the JMS</name>
+  
+  
+  	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<showWarnings>true</showWarnings>
+				</configuration>
+				<version>2.3.2</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+			</plugin>
+			<!-- Plugin to run check style on the javascript files -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.1.1</version>
+				<executions>
+					<!-- <execution> <id>check-style</id> <phase>prepare-package</phase> 
+						<goals> <goal>exec</goal> </goals> <configuration> Closure linter compiler 
+						needs to be installed on your computer; if you've followed the instructions 
+						from Google, gjslint should be runnable from the command line. <executable>gjslint</executable> 
+						<workingDirectory>${basedir}</workingDirectory> <arguments> Set your arguments 
+						here <argument>-strict</argument> <argument>-r</argument> Each source file 
+						in this directory will be checked. <argument>src/main/webapp/resources/js</argument> 
+						</arguments> </configuration> </execution> -->
+
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>install</id>
+						<phase>install</phase>
+						<goals>
+							<goal>sources</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- jboss-as:deploy - Deploys the application. jboss-as:redeploy - Redeploys 
+				the application. jboss-as:undeploy - Undeploys the application. -->
+			<plugin>
+				<groupId>org.jboss.as.plugins</groupId>
+				<artifactId>jboss-as-maven-plugin</artifactId>
+				<version>7.1.1.Final</version>
+				<configuration>
+					<force>true</force>
+					<hostname>${jboss-as.deploy.hostname}</hostname>
+					<username>${jboss-as.deploy.user}</username>
+					<password>${jboss-as.deploy.pass.prod}</password>
+					<fileNames>
+						<fileName>target/${plugin.war.warName}.war</fileName>
+					</fileNames>
+				</configuration>
+
+			</plugin>
+
+			<!-- Apache cxf code generation plugin -->
+			<!-- <plugin> <groupId>org.apache.cxf</groupId> <artifactId>cxf-codegen-plugin</artifactId> 
+				<version>${cxf.version}</version> <executions> <execution> <id>generate-sources</id> 
+				<phase>generate-sources</phase> <configuration> <sourceRoot>${basedir}/target/generated/</sourceRoot> 
+				<wsdlRoot>${basedir}/src/main/resources/wsdl</wsdlRoot> <includes> <include>*Service.wsdl</include> 
+				</includes> <defaultOptions> To enable plugin to generate JAXB classes with 
+				full constructors <extraargs> <extraarg>-xjc-Xvalue-constructor</extraarg> 
+				</extraargs> </defaultOptions> </configuration> <goals> <goal>wsdl2java</goal> 
+				</goals> </execution> </executions> To enable plugin to generate JAXB classes 
+				with full constructors <dependencies> <dependency> <groupId>org.jvnet.jaxb2_commons</groupId> 
+				<artifactId>jaxb2-value-constructor</artifactId> <version>3.0</version> </dependency> 
+				<dependency> <groupId>org.jvnet.jaxb2_commons</groupId> <artifactId>jaxb2-basics</artifactId> 
+				<version>0.6.2</version> </dependency> </dependencies> </plugin> <plugin> 
+				<groupId>org.codehaus.mojo</groupId> <artifactId>build-helper-maven-plugin</artifactId> 
+				<version>1.4</version> <executions> <execution> <id>add-wsdl-source</id> 
+				<phase>process-sources</phase> <goals> <goal>add-source</goal> </goals> <configuration> 
+				<sources> <source>${basedir}/target/generated</source> </sources> </configuration> 
+				</execution> </executions> </plugin> -->
+
+
+		</plugins>
+	</build>
+	
+	<dependencies>
+
+		<dependency>
+				<groupId>${project.groupId}</groupId>
+			<artifactId>jms-jbpm</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+				<groupId>${project.groupId}</groupId>
+			<artifactId>jms-ejb</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+				<groupId>${project.groupId}</groupId>
+			<artifactId>jms-common</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${org.springframework.version}</version>
+			<exclusions>
+				<!-- Exclude Commons Logging in favor of SLF4j -->
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>1.6.12</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>4.1.0.Final</version>
+		</dependency>
+
+		<!-- Joda Time -->
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.3</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time-jsptags</artifactId>
+			<version>1.1.1</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- Servlet -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+		<!-- Test -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.7</version>
+			<scope>test</scope>
+		</dependency>
+
+  		<!-- EJB -->
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>6.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+  
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.12.1.GA</version>
+		</dependency>
+		<!-- exclude dom4j as it is provided by jboss.Else causes class cast exceptions -->
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+</project>
