@@ -17,66 +17,41 @@
 package uk.co.defra.job.mngnt.ejb;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.Local;
-import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 
-
-
-
-
-
-
-
-
-
-//import org.jbpm.deployment.util.RewardsApplicationScopedProducer;
 import org.jbpm.services.task.exception.PermissionDeniedException;
-import org.kie.api.runtime.KieSession;
-import org.kie.api.runtime.manager.Context;
-import org.kie.api.runtime.manager.RuntimeEngine;
-//import org.kie.api.cdi.KSession;
 import org.kie.api.task.TaskService;
 import org.kie.api.task.model.TaskSummary;
 import org.kie.internal.runtime.manager.context.EmptyContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import uk.co.defra.job.mngnt.ejb.inter.TaskLocal;
 import uk.co.defra.job.mngnt.ejb.inter.TaskRemote;
-import uk.co.defra.job.mngnt.engine.JBPNMapType;
 import uk.co.defra.job.mngnt.engine.RewardsApplicationScopedProducer;
-import uk.co.defra.job.mngnt.factories.JobManagementRuntimeFactory;
-import uk.co.defra.job.mngnt.factories.JobManagementRuntimeFactoryImpl;
+//import org.jbpm.deployment.util.RewardsApplicationScopedProducer;
+//import org.kie.api.cdi.KSession;
 
 @Stateless
-@Remote(TaskRemote.class)
-@Local(TaskLocal.class)
-public class TaskBean implements TaskRemote, TaskLocal {
+public class TaskBean implements TaskRemote {
 
 	Logger logger = LoggerFactory.getLogger(TaskBean.class.getName());
 	 
-	JobManagementRuntimeFactory jobManagementRuntimeFactory;  
 	    
     private TaskService taskService;
     
+    @Inject
+    private RewardsApplicationScopedProducer applicationScopedProducer;  
     
-    
-    @PostConstruct
-    private void configure(){
-    	jobManagementRuntimeFactory = JobManagementRuntimeFactoryImpl.getManagerInstance();
-    	taskService = jobManagementRuntimeFactory.getJBPMRuntimeManager(JBPNMapType.REWARDS)
-    						.getRuntimeEngine(EmptyContext.get()).getTaskService();
-    }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public List<TaskSummary> retrieveTaskList(String actorId) throws Exception {
+    	taskService = applicationScopedProducer.getJBPMRuntimeManager()
+    			.getRuntimeEngine(EmptyContext.get()).getTaskService();
 
         
         List<TaskSummary> list = null;

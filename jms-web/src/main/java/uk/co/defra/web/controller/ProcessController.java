@@ -1,5 +1,5 @@
 
-package org.jbpm.defra.controller;
+package uk.co.defra.web.controller;
 
 import java.util.List;
 
@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.kie.api.task.model.TaskSummary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,7 +41,7 @@ public class ProcessController {
 public ProcessController() {
 }
   
-@Inject
+@Autowired
 public ProcessController(JmsProcessFacade jmsProcessFacade) {
 	this.jmsProcessFacade = jmsProcessFacade;
 }
@@ -60,7 +61,7 @@ public ModelAndView startProcessPage() {
     @RequestMapping(value = "/process", method= RequestMethod.POST)
     public ModelAndView getArticles(@RequestParam("recipient") String recipient,Model model) {
     	 
-    	
+    	System.out.println("jmsProcessFacade is "+ (jmsProcessFacade == null));
     	
     	 long processInstanceId = -1;
          try {

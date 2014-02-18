@@ -3,17 +3,22 @@ package uk.co.defra.job.mngnt.ejb.inter;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.interceptor.Interceptors;
 
 import org.kie.api.task.model.TaskSummary;
+import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
+import org.springframework.stereotype.Service;
 
+@Service
+@Interceptors(SpringBeanAutowiringInterceptor.class)
 public class JmsProcessFacade {
 
 
-	  @EJB(mappedName="java:module/ProcessBean")  	
-	  private ProcessLocal processBean;
+	  @EJB
+	  private ProcessRemote processBean;
 	  
-	  @EJB(mappedName="java:module/TaskBean")
-	  private TaskLocal taskBean;
+	  @EJB
+	  private TaskRemote taskBean;
 	  
 	  public long startProcess(String recipient) throws Exception {
 		  

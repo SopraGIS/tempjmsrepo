@@ -9,6 +9,13 @@
   <name>The jbpm module of JMS</name>
   <dependencies>
 
+		<dependency>
+				<groupId>${project.groupId}</groupId>
+			<artifactId>jms-common</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		
 		<!-- Java EE -->
 		<dependency>
 			<groupId>javax</groupId>
@@ -55,11 +62,6 @@
 			<groupId>org.jbpm</groupId>
 			<artifactId>jbpm-runtime-manager</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.rpa.defra</groupId>
-			 <artifactId>jms-common</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<scope>runtime</scope>			
-		</dependency>		
+		
 	</dependencies>
 </project>
