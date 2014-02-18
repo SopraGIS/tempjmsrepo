@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import org.drools.core.command.impl.GenericCommand;
 import org.drools.core.command.impl.KnowledgeCommandContext;
 //import org.jbpm.deployment.util.RewardsApplicationScopedProducer;
@@ -17,13 +19,13 @@ import uk.co.defra.job.mngnt.engine.RewardsApplicationScopedProducer;
 
 public class DigiKieSession  implements Serializable{
 	
-	  /**
+			/**
 			 * 
 			 */
 			private static final long serialVersionUID = 5491005149276800982L;
 			
 			
-	@Autowired
+	@Inject
 	RewardsApplicationScopedProducer rewardsApplicationScopedProducer;
 	
 	private static Map <Long , KieSession> ksessionMap =  new HashMap<Long, KieSession>();

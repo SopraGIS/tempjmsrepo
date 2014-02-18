@@ -50,6 +50,7 @@ import org.slf4j.LoggerFactory;
 import uk.co.defra.job.mngnt.ejb.inter.ProcessLocal;
 import uk.co.defra.job.mngnt.ejb.inter.ProcessRemote;
 import uk.co.defra.job.mngnt.engine.JBPNMapType;
+import uk.co.defra.job.mngnt.engine.RewardsApplicationScopedProducer;
 import uk.co.defra.job.mngnt.factories.JobManagementRuntimeFactory;
 import uk.co.defra.job.mngnt.factories.JobManagementRuntimeFactoryImpl;
 
@@ -64,23 +65,20 @@ public class ProcessBean  implements ProcessRemote
 	 * 
 	 */
 	private static final long serialVersionUID = -4802654641812350406L;
+	
 	static Logger logger = LoggerFactory.getLogger(ProcessBean.class.getName());
-	/** The EntityManager. */
+
+	//The EntityManager.
     @PersistenceContext(unitName = "com.sample.rewards")
     private EntityManager entityManager;
     
+    @Inject
+    private RewardsApplicationScopedProducer applicationScopedProducer;  
     
-    @PostConstruct
-    public void configure() {
-    	
-    		
-    }
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public long startProcess(String recipient) throws Exception {
 	logger.info("starting a process now ");
-	JobManagementRuntimeFactory jobManagementRuntimeFactory = JobManagementRuntimeFactoryImpl.getManagerInstance();
-	RuntimeManager singletonManager = jobManagementRuntimeFactory.getJBPMRuntimeManager(JBPNMapType.REWARDS);
-    RuntimeEngine runtime = singletonManager.getRuntimeEngine(EmptyContext
+	RuntimeEngine runtime = applicationScopedProducer.getJBPMRuntimeManager().getRuntimeEngine(EmptyContext
                 .get());
     
         KieSession ksession = runtime.getKieSession();

@@ -16,6 +16,9 @@
 
 package uk.co.defra.job.mngnt.engine;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceUnit;
@@ -29,15 +32,16 @@ import org.kie.internal.io.ResourceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import uk.co.defra.job.ejb.exception.JobManagementApplicationException;
+
+@Startup
+@Singleton
 public class RewardsApplicationScopedProducer {
 
-//    @Inject
-//    private InjectableRegisterableItemsFactory factory;
-//   
-//    
+    
 	static Logger logger = LoggerFactory.getLogger(RewardsApplicationScopedProducer.class.getName());	
+
 	public RewardsApplicationScopedProducer() {
-		init();
 	}
    
    private RuntimeManager runtimeManager;
@@ -45,7 +49,7 @@ public class RewardsApplicationScopedProducer {
    @PersistenceUnit(unitName = "com.sample.rewards")
     private EntityManagerFactory emf;
 
-   
+   @PostConstruct
     public void init() {
     	logger.info("public void produceEntityManagerFactory() called");
         if (this.emf == null) {
@@ -53,7 +57,7 @@ public class RewardsApplicationScopedProducer {
                     .createEntityManagerFactory("com.sample.rewards");
         }
         
-        logger.info("&&&&&&&&&&&   Post Contruct called ");
+        logger.info("   Post Contruct called ");
         
         RuntimeEnvironment environment = RuntimeEnvironmentBuilder
                 .getDefault()
@@ -64,14 +68,14 @@ public class RewardsApplicationScopedProducer {
                         ResourceType.BPMN2).get();
         
         if(environment == null) {
-        	logger.info("&&&&&&&&&&&  env null");
-        }
-        logger.info("&&&&&&&&&&&   creating the env ");
+        			throw new JobManagementApplicationException("Runtime Environment is Null"); 
+
+        }        
         
        this.runtimeManager= RuntimeManagerFactory.Factory.get()
 		.newSingletonRuntimeManager(environment, "com.sample:example:1.0");
         
-       logger.info("&&&&&&&&&&&   Post Contruct done ");
+       logger.info(" Post Contruct done ");
     }
 
 	public RuntimeManager getJBPMRuntimeManager() {

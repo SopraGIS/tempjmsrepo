@@ -73,16 +73,7 @@ public class EjbServiceFacadeImpl implements  SessionBean, EjbServiceFacade {
 		return remoteContext.lookup(name);
 	}
 
-//	/* (non-Javadoc)
-//	 * @see uk.co.defra.jbpm.ejb.facade.EjbServiceFacade#getServiceBean(java.lang.Class)
-//	 */
-//	@Override
-//	public Object getSetrviceBean(Class clazz) {
-//		StringBuilder buff = new StringBuilder(clazz.getName());
-//		// TODO convention for registering name in jndi??
-//		
-//		return null;
-//	}
+ 
 
 	/* (non-Javadoc)
 	 * @see javax.ejb.SessionBean#ejbActivate()
