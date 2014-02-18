@@ -37,6 +37,7 @@ import javax.persistence.PersistenceContext;
 
 
 
+
 //import org.jbpm.deployment.util.RewardsApplicationScopedProducer;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
@@ -46,9 +47,12 @@ import org.kie.internal.runtime.manager.context.EmptyContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import uk.co.defra.job.mngnt.ejb.inter.ProcessLocal;
+import uk.co.defra.job.mngnt.ejb.inter.ProcessRemote;
 import uk.co.defra.job.mngnt.engine.JBPNMapType;
 import uk.co.defra.job.mngnt.factories.JobManagementRuntimeFactory;
 import uk.co.defra.job.mngnt.factories.JobManagementRuntimeFactoryImpl;
+
 
 @Stateless
 @Remote(ProcessRemote.class)

@@ -1,4 +1,4 @@
-package uk.co.defra.job.mngnt.ejb;
+package uk.co.defra.job.mngnt.ejb.inter;
 
 
 

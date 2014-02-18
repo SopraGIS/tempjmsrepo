@@ -48,6 +48,8 @@ import org.kie.internal.runtime.manager.context.EmptyContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import uk.co.defra.job.mngnt.ejb.inter.TaskLocal;
+import uk.co.defra.job.mngnt.ejb.inter.TaskRemote;
 import uk.co.defra.job.mngnt.engine.JBPNMapType;
 import uk.co.defra.job.mngnt.engine.RewardsApplicationScopedProducer;
 import uk.co.defra.job.mngnt.factories.JobManagementRuntimeFactory;

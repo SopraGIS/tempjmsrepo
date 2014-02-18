@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package uk.co.defra.job.mngnt.ejb;
+package uk.co.defra.job.mngnt.ejb.inter;
 
 import javax.ejb.Local;
 

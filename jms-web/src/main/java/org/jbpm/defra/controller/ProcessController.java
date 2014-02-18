@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.kie.api.task.model.TaskSummary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.kie.api.task.model.TaskSummary;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,11 +24,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-
-//import uk.co.defra.job.mngnt.ejb.Process;
-
+import uk.co.defra.job.ejb.exception.ProcessOperationException;
+import uk.co.defra.job.ejb.exception.SpamException;
+import uk.co.defra.job.mngnt.ejb.inter.ProcessLocal;
+import uk.co.defra.job.mngnt.ejb.inter.TaskLocal;
 import uk.co.defra.job.mngnt.facade.EjbServiceFacade;
-import static uk.co.defra.job.mngnt.ejb.*;
+//import uk.co.defra.job.mngnt.ejb.Process;
 
 @Controller
 public class ProcessController {

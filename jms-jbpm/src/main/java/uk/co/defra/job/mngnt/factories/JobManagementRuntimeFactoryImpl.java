@@ -24,7 +24,6 @@ public class JobManagementRuntimeFactoryImpl implements JobManagementRuntimeFact
 		super();
 	}
 		
-	@Override
 	public synchronized RuntimeManager getJBPMRuntimeManager(JBPNMapType processType) {
 		
 		RewardsApplicationScopedProducer applicationScopedProducer = null;
