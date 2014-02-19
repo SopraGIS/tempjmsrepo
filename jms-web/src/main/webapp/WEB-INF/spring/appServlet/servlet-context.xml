@@ -39,6 +39,6 @@
 	</bean>
 	<!--  <jee:local-slsb id="processService" jndi-name="java:module/ProcessBean" 
 		business-interface="org.jbpm.defra.ProcessLocal"/>  -->
-	 <jee:jndi-lookup id="processBean" jndi-name="java:module/ProcessBean!uk.co.defra.job.mngnt.ejb.inter.ProcessRemote" ></jee:jndi-lookup>
-	 <jee:jndi-lookup id="taskBean" jndi-name="java:module/TaskBean!uk.co.defra.job.mngnt.ejb.inter.TaskRemote" ></jee:jndi-lookup>
+	 <jee:jndi-lookup id="processBean" jndi-name="java:module/ProcessBean!uk.co.defra.ejb.remote.ProcessRemote" ></jee:jndi-lookup>
+	 <jee:jndi-lookup id="taskBean" jndi-name="java:module/TaskBean!uk.co.defra.ejb.remote.TaskRemote" ></jee:jndi-lookup>
 </beans>

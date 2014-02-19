@@ -1,16 +1,17 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.rpa.defra</groupId>
-    <artifactId>jms-solution</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>
-  <artifactId>jms-web</artifactId>
-  <packaging>war</packaging>
-  <name>web module of the JMS</name>
-  
-  
-  	<build>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>jms-web</artifactId>
+	<packaging>war</packaging>
+	<name>web module of the JMS</name>
+
+	<parent>
+		<groupId>org.rpa.defra</groupId>
+		<artifactId>jms-solution</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<build>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -49,7 +50,6 @@
 
 				</executions>
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
@@ -73,12 +73,11 @@
 					<force>true</force>
 					<hostname>${jboss-as.deploy.hostname}</hostname>
 					<username>${jboss-as.deploy.user}</username>
-					<password>${jboss-as.deploy.pass.prod}</password>
+					<password>${jboss-as.deploy.pass}</password>
 					<fileNames>
 						<fileName>target/${plugin.war.warName}.war</fileName>
 					</fileNames>
 				</configuration>
-
 			</plugin>
 
 			<!-- Apache cxf code generation plugin -->
@@ -103,27 +102,26 @@
 
 		</plugins>
 	</build>
-	
-	<dependencies>
 
+	<dependencies>
 		<dependency>
-				<groupId>${project.groupId}</groupId>
-			<artifactId>jms-jbpm</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-				<groupId>${project.groupId}</groupId>
-			<artifactId>jms-ejb</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-				<groupId>${project.groupId}</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>jms-common</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 		</dependency>
-
-
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>jms-ejb</artifactId>
+			<version>${project.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>jms-jbpm</artifactId>
+			<version>${project.version}</version>
+			<scope>runtime</scope>
+		</dependency>
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -151,11 +149,6 @@
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
 			<version>1.6.12</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>4.1.0.Final</version>
 		</dependency>
 
 		<!-- Joda Time -->
@@ -190,39 +183,13 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-
-		<!-- Test -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.7</version>
-			<scope>test</scope>
-		</dependency>
-
-  		<!-- EJB -->
-		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-api</artifactId>
-			<version>6.0</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>${hibernate.version}</version>
-		</dependency>
-  
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>${hibernate.version}</version>
-		</dependency>
 		
 		<dependency>
 			<groupId>javassist</groupId>
 			<artifactId>javassist</artifactId>
 			<version>3.12.1.GA</version>
 		</dependency>
+		
 		<!-- exclude dom4j as it is provided by jboss.Else causes class cast exceptions -->
 		<dependency>
 			<groupId>dom4j</groupId>

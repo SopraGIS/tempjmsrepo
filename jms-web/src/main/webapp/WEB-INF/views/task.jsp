@@ -1,4 +1,4 @@
-<%@ page import="org.kie.api.task.model.TaskSummary" %>
+<%@ page import="uk.co.defra.job.model.JmsTaskSummary" %>
 <%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
@@ -6,8 +6,10 @@
 <title>Task management</title>
 </head>
 <body>
-<% String user = request.getParameter("user"); %>
-<p><%= user %>'s Task</p>
+<%
+	String user = request.getParameter("user");
+%>
+<p><%=user%>'s Task</p>
 <table border="1">
 <tr>
 <th>Task Name</th>
@@ -15,7 +17,9 @@
 <th>ProcessInstance Id</th>
 <th>Action</th>
 </tr>
-<% for (TaskSummary task : (List<TaskSummary>)request.getAttribute("taskList")) { %>
+<%
+	for (JmsTaskSummary task : (List<JmsTaskSummary>)request.getAttribute("taskList")) {
+%>
 <tr>
 <td><%= task.getName() %></td>
 <td><%= task.getId() %></td>
